@@ -15,8 +15,9 @@ router.get('/', async (req, res) => {
       },
     });
     res.json(characters);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch characters' });
+  } catch (e: any) {
+    console.error('Error fetching characters:', e);
+    res.status(500).json({ error: 'Failed to fetch characters', details: e.message });
   }
 });
 
