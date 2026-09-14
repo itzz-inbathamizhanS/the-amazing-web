@@ -1,0 +1,240 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Spider-Verse design system.
+ * Moody deep-space navy, comic-ink accents, halftone + scanline textures.
+ * All colors in oklch. Never hardcode colors in components.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-void: var(--void);
+  --color-surface: var(--surface);
+  --color-web: var(--web);
+  --color-spark: var(--spark);
+  --color-ink: var(--ink);
+  --color-earth-616: var(--earth-616);
+  --color-earth-1610: var(--earth-1610);
+  --color-earth-65: var(--earth-65);
+  --color-earth-928: var(--earth-928);
+  --color-earth-90214: var(--earth-90214);
+  --color-earth-138: var(--earth-138);
+  --font-display: "Bebas Neue", "Impact", sans-serif;
+  --font-sans: "Barlow", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+  --shadow-glow: 0 0 40px -8px color-mix(in oklab, var(--primary) 60%, transparent);
+  --shadow-panel: 0 24px 60px -24px oklch(0 0 0 / 0.8);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  --void: oklch(0.11 0.035 265);
+  --background: oklch(0.13 0.04 265);
+  --surface: oklch(0.18 0.045 266);
+  --foreground: oklch(0.97 0.01 250);
+
+  --card: oklch(0.18 0.045 266);
+  --card-foreground: oklch(0.97 0.01 250);
+  --popover: oklch(0.16 0.04 266);
+  --popover-foreground: oklch(0.97 0.01 250);
+
+  --primary: oklch(0.62 0.24 18);
+  --primary-foreground: oklch(0.99 0.01 250);
+  --secondary: oklch(0.24 0.05 266);
+  --secondary-foreground: oklch(0.95 0.01 250);
+  --muted: oklch(0.22 0.045 266);
+  --muted-foreground: oklch(0.7 0.03 262);
+  --accent: oklch(0.78 0.16 195);
+  --accent-foreground: oklch(0.13 0.04 265);
+  --destructive: oklch(0.6 0.23 25);
+  --destructive-foreground: oklch(0.98 0.01 250);
+
+  --border: oklch(0.31 0.05 266);
+  --input: oklch(0.28 0.05 266);
+  --ring: oklch(0.72 0.15 195);
+
+  --web: oklch(0.8 0.02 250);
+  --spark: oklch(0.88 0.18 95);
+  --ink: oklch(0.09 0.02 265);
+
+  --earth-616: oklch(0.62 0.24 18);
+  --earth-1610: oklch(0.66 0.22 300);
+  --earth-65: oklch(0.78 0.16 195);
+  --earth-928: oklch(0.72 0.19 150);
+  --earth-90214: oklch(0.78 0.03 250);
+  --earth-138: oklch(0.83 0.18 85);
+
+  --gradient-void: radial-gradient(
+    ellipse 120% 80% at 50% 0%,
+    oklch(0.22 0.08 280 / 0.55),
+    transparent 65%
+  );
+  --gradient-ink: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 90%, black),
+    color-mix(in oklab, var(--earth-1610) 80%, black)
+  );
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 70%, transparent);
+  }
+}
+
+/* ---------- Comic-medium textures ---------- */
+
+@utility halftone {
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--foreground) 22%, transparent) 1px,
+    transparent 1.2px
+  );
+  background-size: 6px 6px;
+}
+
+@utility scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--foreground) 6%, transparent) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+@utility void-wash {
+  background-image: var(--gradient-void);
+}
+
+@utility ink-panel {
+  background-color: color-mix(in oklab, var(--surface) 85%, transparent);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-panel);
+  backdrop-filter: blur(8px);
+}
+
+@utility text-glow {
+  text-shadow: 0 0 24px color-mix(in oklab, currentColor 55%, transparent);
+}
+
+@utility hover-lift {
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklab, var(--accent) 60%, transparent);
+  box-shadow: 0 0 32px -12px color-mix(in oklab, var(--accent) 70%, transparent);
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes glitch-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(-6px, 8px, 0) skewX(6deg);
+    filter: blur(2px);
+  }
+  40% {
+    opacity: 1;
+    transform: translate3d(3px, -2px, 0) skewX(-3deg);
+  }
+  70% {
+    transform: translate3d(-1px, 1px, 0) skewX(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes pulse-node {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -24px, 0);
+  }
+}
+
+.animate-glitch-in {
+  animation: glitch-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.animate-pulse-node {
+  animation: pulse-node 2.8s ease-in-out infinite;
+}
+.animate-drift {
+  animation: drift 9s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-glitch-in,
+  .animate-pulse-node,
+  .animate-drift {
+    animation: none !important;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}

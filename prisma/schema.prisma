@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Character {
+  id                 String             @id // slug
+  name               String
+  alias              String?
+  earthId            String?
+  earth              Earth?             @relation(fields: [earthId], references: [id])
+  realName           String?
+  firstAppearance    String?
+  description        String?
+  powers             String?
+  imageUrl           String?
+  tags               String?            // stored as comma-separated
+  media              String?            // "comics", "animated", "live-action" (comma-separated)
+  
+  // Relations
+  timelineEvents     CharacterTimelineEvent[]
+  movies             CharacterMovie[]
+  relatedCharacters  RelatedCharacter[] @relation("CharacterToRelated")
+  relatedTo          RelatedCharacter[] @relation("RelatedToCharacter")
+  attachments        ComicAttachment[]
+}
+
+model RelatedCharacter {
+  id                 Int       @id @default(autoincrement())
+  characterId        String
+  relatedCharacterId String
+
+  character          Character @relation("CharacterToRelated", fields: [characterId], references: [id])
+  relatedCharacter   Character @relation("RelatedToCharacter", fields: [relatedCharacterId], references: [id])
+}
+
+model Earth {
+  id                 String      @id // e.g. earth-1610
+  designation        String
+  description        String?
+  primaryCharacterId String?
+  hex                String?     // e.g. "#ff3b5c"
+  colorVar           String?     // e.g. "--earth-616"
+  characters         Character[]
+}
+
+model TimelineEvent {
+  id                 String             @id // slug
+  title              String
+  year               Int
+  dateRange          String?
+  summary            String?
+  branch             String             @default("earth-616")
+  crossover          Boolean            @default(false)
+  issues             String?            // comma-separated
+  characters         CharacterTimelineEvent[]
+  attachments        ComicAttachment[]
+}
+
+model CharacterTimelineEvent {
+  characterId        String
+  eventId            String
+
+  character          Character     @relation(fields: [characterId], references: [id])
+  event              TimelineEvent @relation(fields: [eventId], references: [id])
+
+  @@id([characterId, eventId])
+}
+
+model Movie {
+  id                 String             @id // slug
+  title              String
+  year               Int
+  type               String             // "live-action" | "animated"
+  continuity         String?
+  watchOrderRank     Int?
+  
+  characters         CharacterMovie[]
+  actors             ActorMovie[]
+}
+
+model CharacterMovie {
+  characterId        String
+  movieId            String
+
+  character          Character @relation(fields: [characterId], references: [id])
+  movie              Movie     @relation(fields: [movieId], references: [id])
+
+  @@id([characterId, movieId])
+}
+
+model Actor {
+  id                 String       @id // slug
+  name               String
+  role               String?
+  movies             ActorMovie[]
+}
+
+model ActorMovie {
+  actorId            String
+  movieId            String
+
+  actor              Actor @relation(fields: [actorId], references: [id])
+  movie              Movie @relation(fields: [movieId], references: [id])
+
+  @@id([actorId, movieId])
+}
+
+model ComicAttachment {
+  id                 String         @id @default(uuid())
+  title              String
+  ownedFormat        String         // "physical" | "digital"
+  filePath           String?        // optional path to uploaded file
+  personalNotes      String?
+  
+  linkedCharacterId  String?
+  character          Character?     @relation(fields: [linkedCharacterId], references: [id])
+  
+  linkedEventId      String?
+  event              TimelineEvent? @relation(fields: [linkedEventId], references: [id])
+}
