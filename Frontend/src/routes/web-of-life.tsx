@@ -26,11 +26,11 @@ export const Route = createFileRoute("/web-of-life")({
 function WebOfLife() {
   const charStore = useCollection<Character>("characters");
   const earthStore = useCollection<Earth>("earths");
-  const fgRef = useRef<any>();
+  const fgRef = useRef<any>(null);
 
   const graphData = useMemo(() => {
     const nodes = charStore.items.map((c) => {
-      const earth = earthStore.items.find((e) => e.id === (c.earth || c.earthId));
+      const earth = earthStore.items.find((e) => e.id === c.earth);
       return {
         id: c.id,
         name: c.alias || c.name,

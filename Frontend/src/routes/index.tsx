@@ -3,7 +3,7 @@ import { BranchLegend, MultiverseStage } from "@/components/MultiverseStage";
 import { type Character, type Earth, type TimelineEvent, type Movie } from "@/data/spiderverse";
 import { useCollection } from "@/lib/content-store";
 import { useState, useCallback } from "react";
-import { Users, Globe, Film, User, Calendar, Sparkles, Search } from "lucide-react";
+import { Users, Globe, Film, User, Calendar, Sparkles, Search, Compass } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -48,6 +48,7 @@ function Home() {
   const surpriseMe = useCallback(() => {
     if (charStore.items.length === 0) return;
     const random = charStore.items[Math.floor(Math.random() * charStore.items.length)];
+    if (!random) return;
     navigate({ to: "/directory/$characterId", params: { characterId: random.id } });
   }, [charStore.items, navigate]);
 
@@ -89,6 +90,7 @@ function Home() {
                 </Link>
                 <Link
                   to="/search"
+                  search={{ q: "" }}
                   className="rounded-full border border-border bg-background/50 px-5 py-2.5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-foreground/85 transition-colors hover:border-accent"
                 >
                   Search Ctrl+K
@@ -275,6 +277,7 @@ function Home() {
           </Link>
           <Link
             to="/search"
+            search={{ q: "" }}
             className="ink-panel hover-lift rounded-lg p-8 text-center"
           >
             <Search className="mx-auto h-10 w-10 text-accent" />

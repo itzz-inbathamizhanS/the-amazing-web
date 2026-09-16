@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+const API_URL = import.meta.env['VITE_API_URL'] || "http://localhost:3001/api";
 
 // Mapper to align backend schema with frontend expected types
 export function mapFromApi(key: string, item: any): any {

@@ -32,7 +32,7 @@ const getCharacterFields = (earths: Earth[]): Field[] => [
 export const Route = createFileRoute("/directory/$characterId")({
   loader: async ({ params }) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+      const API_URL = import.meta.env['VITE_API_URL'] || "http://localhost:3001/api";
       const res = await fetch(`${API_URL}/characters/${params.characterId}`);
       if (!res.ok) throw notFound();
       const char = await res.json();
@@ -83,7 +83,7 @@ function CharacterDetail() {
   const earth = earthStore.items.find((e) => e.id === character.earth);
   const events = eventStore.items.filter((e) => e.characters?.includes(character.id) || (Array.isArray(e.characters) === false && e.id && false)); // Since characters in event might not be fully fetched/array in DB, actually timeline-events relation is not returned by the API properly! Wait... wait, timeline-events API does not return characters list in my content-store mapping. 
   const films = filmStore.items.filter((m) => m.characters?.includes(character.id));
-  const related = character.related?.map((id) => store.items.find(c => c.id === id)).filter(Boolean) || [];
+  const related = character.related?.map((id: string) => store.items.find(c => c.id === id)).filter(Boolean) || [];
 
   return (
     <>
@@ -119,15 +119,15 @@ function CharacterDetail() {
                 {character.name} · {character.realName}
               </p>
               <div className="mt-5 flex flex-wrap gap-1.5">
-                {character.media.map((m) => (
+                {character.media.map((m: any) => (
                   <span
                     key={m}
                     className="rounded border border-border px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-foreground/75"
                   >
-                    {mediumLabel[m]}
+                    {mediumLabel[m as keyof typeof mediumLabel]}
                   </span>
                 ))}
-                {character.tags.map((t) => (
+                {character.tags.map((t: string) => (
                   <span
                     key={t}
                     className="rounded border border-accent/40 bg-accent/10 px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-foreground/85"
@@ -177,7 +177,7 @@ function CharacterDetail() {
         <section className="ink-panel rounded-lg p-6">
           <h2 className="text-3xl leading-none">ABILITIES</h2>
           <ul className="mt-3 space-y-2">
-            {character.powers.map((p) => (
+            {character.powers.map((p: string) => (
               <li key={p} className="flex items-center gap-2 text-sm text-muted-foreground">
                 <span
                   aria-hidden
@@ -228,7 +228,7 @@ function CharacterDetail() {
 
           <h3 className="mt-6 font-display text-2xl leading-none">RELATED</h3>
           <div className="mt-3 flex flex-wrap gap-1.5">
-            {related.map((r) => (
+            {related.map((r: any) => (
               <Link
                 key={r!.id}
                 to="/directory/$characterId"

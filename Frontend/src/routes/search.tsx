@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect, useCallback } from "react";
 import { PageHeader } from "@/components/SiteChrome";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+const API_URL = import.meta.env['VITE_API_URL'] || "http://localhost:3001/api";
 
 type SearchResults = {
   characters?: { id: string; name: string; alias: string | null; earthId: string | null; imageUrl: string | null; media: string | null }[];
@@ -19,8 +19,8 @@ export const Route = createFileRoute("/search")({
       { name: "description", content: "Search across every character, Earth, movie, actor, and event in the Spider-Verse." },
     ],
   }),
-  validateSearch: (search: Record<string, unknown>) => ({
-    q: (search.q as string) || "",
+  validateSearch: (search: Record<string, unknown>): { q?: string | undefined } => ({
+    q: search['q'] as string | undefined,
   }),
   component: SearchPage,
 });
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/search")({
 function SearchPage() {
   const { q } = Route.useSearch();
   const navigate = useNavigate();
-  const [query, setQuery] = useState(q);
+  const [query, setQuery] = useState(q || "");
   const [results, setResults] = useState<SearchResults>({});
   const [loading, setLoading] = useState(false);
 

@@ -43,6 +43,7 @@ function DiscoverPage() {
   const surpriseMe = useCallback(() => {
     if (charStore.items.length === 0) return;
     const random = charStore.items[Math.floor(Math.random() * charStore.items.length)];
+    if (!random) return;
     navigate({ to: "/directory/$characterId", params: { characterId: random.id } });
   }, [charStore.items, navigate]);
 
