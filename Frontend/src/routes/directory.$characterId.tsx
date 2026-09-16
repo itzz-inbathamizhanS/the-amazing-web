@@ -32,7 +32,8 @@ const getCharacterFields = (earths: Earth[]): Field[] => [
 export const Route = createFileRoute("/directory/$characterId")({
   loader: async ({ params }) => {
     try {
-      const res = await fetch(`http://localhost:3001/api/characters/${params.characterId}`);
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+      const res = await fetch(`${API_URL}/characters/${params.characterId}`);
       if (!res.ok) throw notFound();
       const char = await res.json();
       if (!char) throw notFound();

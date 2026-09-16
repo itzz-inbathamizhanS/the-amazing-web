@@ -75,15 +75,21 @@ export function RecordDialog({
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const res = await fetch("http://localhost:3001/api/upload", {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+      const res = await fetch(`${API_URL}/upload`, {
         method: "POST",
+        headers: {
+          "x-api-key": localStorage.getItem("spider-admin-key") || "",
+        },
         body: formData,
       });
-      if (res.ok) {
-        const data = await res.json();
-        const finalUrl = data.url.startsWith('http') ? data.url : "http://localhost:3001" + data.url;
-        setDraft((d) => ({ ...d, [key]: finalUrl }));
-      }
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Upload failed");
+      
+      const BASE_URL = API_URL.replace(/\/api$/, "");
+      const finalUrl = data.url.startsWith('http') ? data.url : BASE_URL + data.url;
+      setDraft((d) => ({ ...d, [key]: finalUrl }));
     } catch (err) {
       console.error("Upload failed", err);
     } finally {
