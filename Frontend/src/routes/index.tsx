@@ -31,7 +31,7 @@ function Home() {
   return (
     <>
       <section className="relative h-[300vh]">
-        <div className="sticky top-0 h-screen">
+        <div className="sticky top-0 h-[100dvh]">
           <MultiverseStage mode="hero" className="h-full w-full" />
 
           <div className="pointer-events-none absolute inset-x-0 top-0 z-20 px-4 pt-16 sm:px-6 sm:pt-24">
