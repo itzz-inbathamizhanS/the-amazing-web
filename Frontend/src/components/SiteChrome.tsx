@@ -20,7 +20,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/70 bg-void/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <Link to="/" className="group flex items-center gap-3">
-          <img src="/logo.png" alt="Logo" className="h-6 w-auto transition-transform group-hover:scale-110 invert" />
+          <img src="/nav-logo.png" alt="Logo" className="h-6 w-auto transition-transform group-hover:scale-110" />
           <span className="font-display text-xl leading-none tracking-widest">
             THE AMAZING WEB
           </span>

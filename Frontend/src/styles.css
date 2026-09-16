@@ -115,6 +115,11 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    cursor: url('/cursor.svg') 16 16, auto;
+  }
+
+  a, button, [role="button"] {
+    cursor: url('/cursor.svg') 16 16, pointer;
   }
 
   h1,
