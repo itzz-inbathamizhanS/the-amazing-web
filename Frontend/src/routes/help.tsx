@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
+import { Users, Globe, Film, User, Calendar, Link as LinkIcon, Search, Compass, Map } from "lucide-react";
 
 export const Route = createFileRoute("/help")({
   head: () => ({
@@ -210,15 +211,15 @@ function HelpPage() {
             </p>
             <div className="mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-6">
               {[
-                { icon: "🕷️", label: "Characters", desc: "Spider-variants across the multiverse" },
-                { icon: "🌐", label: "Earths", desc: "Alternate universes with unique identities" },
-                { icon: "🎬", label: "Movies", desc: "Animated and live-action films" },
-                { icon: "🎭", label: "Actors", desc: "Performers who brought characters to life" },
-                { icon: "📅", label: "Events", desc: "Key story moments and crossovers" },
-                { icon: "🔗", label: "Connections", desc: "Relationships linking everything together" },
+                { icon: Users, label: "Characters", desc: "Spider-variants across the multiverse" },
+                { icon: Globe, label: "Earths", desc: "Alternate universes with unique identities" },
+                { icon: Film, label: "Movies", desc: "Animated and live-action films" },
+                { icon: User, label: "Actors", desc: "Performers who brought characters to life" },
+                { icon: Calendar, label: "Events", desc: "Key story moments and crossovers" },
+                { icon: LinkIcon, label: "Connections", desc: "Relationships linking everything together" },
               ].map((cat) => (
-                <div key={cat.label} className="ink-panel rounded-lg p-4 text-center">
-                  <span className="text-2xl">{cat.icon}</span>
+                <div key={cat.label} className="ink-panel rounded-lg p-4 text-center flex flex-col items-center">
+                  <cat.icon className="h-6 w-6 text-foreground" />
                   <p className="mt-2 text-sm font-medium text-foreground">{cat.label}</p>
                   <p className="mt-1 text-[0.65rem] text-muted-foreground">{cat.desc}</p>
                 </div>
@@ -231,7 +232,7 @@ function HelpPage() {
             <div className="space-y-8">
               {/* Character Explorer */}
               <div className="ink-panel rounded-lg p-6">
-                <h3 className="text-2xl leading-none">🕷️ CHARACTER EXPLORER</h3>
+                <h3 className="text-2xl leading-none flex items-center gap-2"><Users className="text-accent h-6 w-6" /> CHARACTER EXPLORER</h3>
                 <p className="mt-3 text-sm text-muted-foreground">
                   Browse every Spider-variant in the database with filtering and search.
                 </p>
@@ -261,7 +262,7 @@ function HelpPage() {
 
               {/* Earth Explorer */}
               <div className="ink-panel rounded-lg p-6">
-                <h3 className="text-2xl leading-none">🌐 EARTH EXPLORER</h3>
+                <h3 className="text-2xl leading-none flex items-center gap-2"><Globe className="text-accent h-6 w-6" /> EARTH EXPLORER</h3>
                 <p className="mt-3 text-sm text-muted-foreground">
                   Each Earth (universe) has its own detail page showing its unique accent colour,
                   description, characters from that Earth, and associated timeline events.
@@ -291,7 +292,7 @@ function HelpPage() {
 
               {/* Movie Explorer */}
               <div className="ink-panel rounded-lg p-6">
-                <h3 className="text-2xl leading-none">🎬 MOVIE EXPLORER</h3>
+                <h3 className="text-2xl leading-none flex items-center gap-2"><Film className="text-accent h-6 w-6" /> MOVIE EXPLORER</h3>
                 <p className="mt-3 text-sm text-muted-foreground">
                   Explore both animated and live-action Spider-Verse films with cast, characters, and release details.
                 </p>
@@ -324,7 +325,7 @@ function HelpPage() {
 
               {/* Actor Explorer */}
               <div className="ink-panel rounded-lg p-6">
-                <h3 className="text-2xl leading-none">🎭 ACTOR PROFILES</h3>
+                <h3 className="text-2xl leading-none flex items-center gap-2"><User className="text-accent h-6 w-6" /> ACTOR PROFILES</h3>
                 <p className="mt-3 text-sm text-muted-foreground">
                   See which actors portrayed Spider-Verse characters and browse their filmography.
                 </p>
@@ -347,7 +348,7 @@ function HelpPage() {
 
               {/* Timeline */}
               <div className="ink-panel rounded-lg p-6">
-                <h3 className="text-2xl leading-none">📅 TIMELINE</h3>
+                <h3 className="text-2xl leading-none flex items-center gap-2"><Calendar className="text-accent h-6 w-6" /> TIMELINE</h3>
                 <p className="mt-3 text-sm text-muted-foreground">
                   A chronological view of Spider-Verse comics events, crossovers, and story branch points.
                   Available in both a 3D visualization mode and a plain list mode.
@@ -377,7 +378,7 @@ function HelpPage() {
 
               {/* Discover */}
               <div className="ink-panel rounded-lg p-6">
-                <h3 className="text-2xl leading-none">🔮 DISCOVER MODE</h3>
+                <h3 className="text-2xl leading-none flex items-center gap-2"><Compass className="text-accent h-6 w-6" /> DISCOVER MODE</h3>
                 <p className="mt-3 text-sm text-muted-foreground">
                   A randomised exploration experience. Every visit shows different characters, Earths,
                   and movies. Hit "Shuffle" to regenerate, or "Surprise Me" to jump to a random character.
@@ -393,8 +394,8 @@ function HelpPage() {
                   <div>
                     <dt className="font-mono text-[0.6rem] uppercase tracking-widest text-accent">How To Use</dt>
                     <dd className="mt-1 text-muted-foreground">
-                      Go to <strong>/discover</strong>. Click ↻ Shuffle to get new random entities.
-                      Click 🎲 Surprise Me to jump directly to a random character's profile.
+                      Go to <strong>/discover</strong>. Click Shuffle to get new random entities.
+                      Click Surprise Me to jump directly to a random character's profile.
                     </dd>
                   </div>
                 </dl>
@@ -757,19 +758,19 @@ function HelpPage() {
             </p>
             <div className="mt-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-6 max-w-4xl mx-auto">
               {[
-                { to: "/directory" as const, icon: "🕷️", label: "Explore Characters" },
-                { to: "/what-is-the-spider-verse" as const, icon: "🌐", label: "Explore Earths" },
-                { to: "/animated-films" as const, icon: "🎬", label: "Explore Movies" },
-                { to: "/live-action" as const, icon: "🎭", label: "Explore Actors" },
-                { to: "/timeline" as const, icon: "📅", label: "Explore Events" },
-                { to: "/web-of-life" as const, icon: "🔗", label: "Open Multiverse" },
+                { to: "/directory" as const, icon: Users, label: "Explore Characters" },
+                { to: "/what-is-the-spider-verse" as const, icon: Globe, label: "Explore Earths" },
+                { to: "/animated-films" as const, icon: Film, label: "Explore Movies" },
+                { to: "/live-action" as const, icon: User, label: "Explore Actors" },
+                { to: "/timeline" as const, icon: Calendar, label: "Explore Events" },
+                { to: "/web-of-life" as const, icon: LinkIcon, label: "Open Multiverse" },
               ].map((card) => (
                 <Link
                   key={card.to}
                   to={card.to}
-                  className="ink-panel hover-lift rounded-lg p-4 text-center"
+                  className="ink-panel hover-lift rounded-lg p-4 text-center flex flex-col items-center"
                 >
-                  <span className="text-2xl">{card.icon}</span>
+                  <card.icon className="h-6 w-6 text-foreground" />
                   <p className="mt-2 font-mono text-[0.6rem] uppercase tracking-widest text-foreground">
                     {card.label}
                   </p>

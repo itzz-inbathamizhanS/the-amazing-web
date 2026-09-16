@@ -1,19 +1,20 @@
-﻿import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { BranchLegend, MultiverseStage } from "@/components/MultiverseStage";
 import { type Character, type Earth, type TimelineEvent, type Movie } from "@/data/spiderverse";
 import { useCollection } from "@/lib/content-store";
 import { useState, useCallback } from "react";
+import { Users, Globe, Film, User, Calendar, Sparkles, Search } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Amazing Web â€” A Cinematic Spider-Verse Multiverse Map" },
+      { title: "The Amazing Web — A Cinematic Spider-Verse Multiverse Map" },
       {
         name: "description",
         content:
           "Travel a glowing 3D timeline where the main Marvel continuity splits into alternate Earths. Explore Spider-variants, comics crossovers, animated films and live-action continuities.",
       },
-      { property: "og:title", content: "The Amazing Web â€” A Cinematic Spider-Verse Map" },
+      { property: "og:title", content: "The Amazing Web — A Cinematic Spider-Verse Map" },
       {
         property: "og:description",
         content:
@@ -52,7 +53,7 @@ function Home() {
 
   return (
     <>
-      {/* â”€â”€â”€â”€â”€ HERO â”€â”€â”€â”€â”€ */}
+      {/* ───── HERO ───── */}
       <section className="relative h-[300vh]">
         <div className="sticky top-0 h-[100dvh]">
           <MultiverseStage mode="hero" className="h-full w-full" />
@@ -60,7 +61,7 @@ function Home() {
           <div className="pointer-events-none absolute inset-x-0 top-0 z-20 px-4 pt-16 sm:px-6 sm:pt-24">
             <div className="mx-auto max-w-6xl">
               <p className="animate-glitch-in font-mono text-[0.68rem] uppercase tracking-[0.4em] text-accent">
-                One timeline Â· many Earths
+                One timeline · many Earths
               </p>
               <h1 className="mt-4 max-w-3xl text-6xl leading-[0.88] text-glow sm:text-8xl">
                 THE AMAZING WEB
@@ -90,7 +91,7 @@ function Home() {
                   to="/search"
                   className="rounded-full border border-border bg-background/50 px-5 py-2.5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-foreground/85 transition-colors hover:border-accent"
                 >
-                  Search âŒ˜K
+                  Search Ctrl+K
                 </Link>
               </div>
             </div>
@@ -98,7 +99,7 @@ function Home() {
         </div>
       </section>
 
-      {/* â”€â”€â”€â”€â”€ STATS â”€â”€â”€â”€â”€ */}
+      {/* ───── STATS ───── */}
       <section className="relative border-y border-border/60">
         <div className="pointer-events-none absolute inset-0 scanlines opacity-30" />
         <div className="mx-auto grid max-w-7xl gap-6 px-4 py-16 sm:grid-cols-4 sm:px-6">
@@ -118,7 +119,7 @@ function Home() {
         </div>
       </section>
 
-      {/* â”€â”€â”€â”€â”€ EXPLORE THE WEB â”€â”€â”€â”€â”€ */}
+      {/* ───── EXPLORE THE WEB ───── */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <p className="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-accent">
           Explore the Web
@@ -130,18 +131,18 @@ function Home() {
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {[
-            { to: "/directory" as const, label: "Characters", count: charStore.items.length, icon: "ðŸ•·ï¸" },
-            { to: "/what-is-the-spider-verse" as const, label: "Earths", count: earthStore.items.length, icon: "ðŸŒ" },
-            { to: "/animated-films" as const, label: "Movies", count: movieStore.items.length, icon: "ðŸŽ¬" },
-            { to: "/live-action" as const, label: "Actors", count: 0, icon: "ðŸŽ­" },
-            { to: "/timeline" as const, label: "Timeline", count: eventStore.items.length, icon: "ðŸ“…" },
+            { to: "/directory" as const, label: "Characters", count: charStore.items.length, icon: Users },
+            { to: "/what-is-the-spider-verse" as const, label: "Earths", count: earthStore.items.length, icon: Globe },
+            { to: "/animated-films" as const, label: "Movies", count: movieStore.items.length, icon: Film },
+            { to: "/live-action" as const, label: "Actors", count: 0, icon: User },
+            { to: "/timeline" as const, label: "Timeline", count: eventStore.items.length, icon: Calendar },
           ].map((cat) => (
             <Link
               key={cat.label}
               to={cat.to}
               className="ink-panel hover-lift flex flex-col items-center rounded-lg p-6 text-center"
             >
-              <span className="text-3xl" aria-hidden>{cat.icon}</span>
+              <cat.icon className="h-8 w-8 text-accent" />
               <p className="mt-3 text-lg font-medium text-foreground">{cat.label}</p>
               {cat.count > 0 && (
                 <p className="mt-1 font-mono text-xs text-muted-foreground">{cat.count} entries</p>
@@ -151,7 +152,7 @@ function Home() {
         </div>
       </section>
 
-      {/* â”€â”€â”€â”€â”€ FEATURED CHARACTERS â”€â”€â”€â”€â”€ */}
+      {/* ───── FEATURED CHARACTERS ───── */}
       {featured.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
           <div className="flex items-center justify-between mb-8">
@@ -165,7 +166,7 @@ function Home() {
               onClick={surpriseMe}
               className="hidden sm:inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-primary-foreground shadow-glow transition-transform hover:scale-[1.03]"
             >
-              ðŸŽ² Surprise Me
+              <Sparkles className="h-3.5 w-3.5" /> Surprise Me
             </button>
           </div>
 
@@ -190,7 +191,7 @@ function Home() {
                 <div className="p-4">
                   <p className="text-lg font-medium text-foreground">{c.alias || c.name}</p>
                   <p className="font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">
-                    {c.name} Â· {c.earth}
+                    {c.name} · {c.earth}
                   </p>
                 </div>
               </Link>
@@ -203,7 +204,7 @@ function Home() {
               onClick={surpriseMe}
               className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-mono text-sm uppercase tracking-[0.2em] text-primary-foreground shadow-glow"
             >
-              ðŸŽ² Surprise Me
+              <Sparkles className="h-4 w-4" /> Surprise Me
             </button>
           </div>
         </section>
