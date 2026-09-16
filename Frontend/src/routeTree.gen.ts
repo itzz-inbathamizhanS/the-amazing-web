@@ -14,12 +14,17 @@ import { Route as AdjacentRouteImport } from './routes/adjacent'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AnimatedFilmsRouteImport } from './routes/animated-films'
 import { Route as CollectionRouteImport } from './routes/collection'
+import { Route as DiscoverRouteImport } from './routes/discover'
 import { Route as LiveActionRouteImport } from './routes/live-action'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as TimelineRouteImport } from './routes/timeline'
 import { Route as WebOfLifeRouteImport } from './routes/web-of-life'
 import { Route as WhatIsTheSpiderVerseRouteImport } from './routes/what-is-the-spider-verse'
+import { Route as ActorsActorIdRouteImport } from './routes/actors.$actorId'
 import { Route as DirectoryIndexRouteImport } from './routes/directory.index'
 import { Route as DirectoryCharacterIdRouteImport } from './routes/directory.$characterId'
+import { Route as EarthsEarthIdRouteImport } from './routes/earths.$earthId'
+import { Route as MoviesMovieIdRouteImport } from './routes/movies.$movieId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,9 +51,19 @@ const CollectionRoute = CollectionRouteImport.update({
   path: '/collection',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DiscoverRoute = DiscoverRouteImport.update({
+  id: '/discover',
+  path: '/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LiveActionRoute = LiveActionRouteImport.update({
   id: '/live-action',
   path: '/live-action',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TimelineRoute = TimelineRouteImport.update({
@@ -66,6 +81,11 @@ const WhatIsTheSpiderVerseRoute = WhatIsTheSpiderVerseRouteImport.update({
   path: '/what-is-the-spider-verse',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActorsActorIdRoute = ActorsActorIdRouteImport.update({
+  id: '/actors/$actorId',
+  path: '/actors/$actorId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DirectoryIndexRoute = DirectoryIndexRouteImport.update({
   id: '/directory/',
   path: '/directory/',
@@ -76,6 +96,16 @@ const DirectoryCharacterIdRoute = DirectoryCharacterIdRouteImport.update({
   path: '/directory/$characterId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EarthsEarthIdRoute = EarthsEarthIdRouteImport.update({
+  id: '/earths/$earthId',
+  path: '/earths/$earthId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoviesMovieIdRoute = MoviesMovieIdRouteImport.update({
+  id: '/movies/$movieId',
+  path: '/movies/$movieId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -83,11 +113,16 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/animated-films': typeof AnimatedFilmsRoute
   '/collection': typeof CollectionRoute
+  '/discover': typeof DiscoverRoute
   '/live-action': typeof LiveActionRoute
+  '/search': typeof SearchRoute
   '/timeline': typeof TimelineRoute
   '/web-of-life': typeof WebOfLifeRoute
   '/what-is-the-spider-verse': typeof WhatIsTheSpiderVerseRoute
+  '/actors/$actorId': typeof ActorsActorIdRoute
   '/directory/$characterId': typeof DirectoryCharacterIdRoute
+  '/earths/$earthId': typeof EarthsEarthIdRoute
+  '/movies/$movieId': typeof MoviesMovieIdRoute
   '/directory/': typeof DirectoryIndexRoute
 }
 export interface FileRoutesByTo {
@@ -96,11 +131,16 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/animated-films': typeof AnimatedFilmsRoute
   '/collection': typeof CollectionRoute
+  '/discover': typeof DiscoverRoute
   '/live-action': typeof LiveActionRoute
+  '/search': typeof SearchRoute
   '/timeline': typeof TimelineRoute
   '/web-of-life': typeof WebOfLifeRoute
   '/what-is-the-spider-verse': typeof WhatIsTheSpiderVerseRoute
+  '/actors/$actorId': typeof ActorsActorIdRoute
   '/directory/$characterId': typeof DirectoryCharacterIdRoute
+  '/earths/$earthId': typeof EarthsEarthIdRoute
+  '/movies/$movieId': typeof MoviesMovieIdRoute
   '/directory': typeof DirectoryIndexRoute
 }
 export interface FileRoutesById {
@@ -110,11 +150,16 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/animated-films': typeof AnimatedFilmsRoute
   '/collection': typeof CollectionRoute
+  '/discover': typeof DiscoverRoute
   '/live-action': typeof LiveActionRoute
+  '/search': typeof SearchRoute
   '/timeline': typeof TimelineRoute
   '/web-of-life': typeof WebOfLifeRoute
   '/what-is-the-spider-verse': typeof WhatIsTheSpiderVerseRoute
+  '/actors/$actorId': typeof ActorsActorIdRoute
   '/directory/$characterId': typeof DirectoryCharacterIdRoute
+  '/earths/$earthId': typeof EarthsEarthIdRoute
+  '/movies/$movieId': typeof MoviesMovieIdRoute
   '/directory/': typeof DirectoryIndexRoute
 }
 export interface FileRouteTypes {
@@ -125,11 +170,16 @@ export interface FileRouteTypes {
     | '/admin'
     | '/animated-films'
     | '/collection'
+    | '/discover'
     | '/live-action'
+    | '/search'
     | '/timeline'
     | '/web-of-life'
     | '/what-is-the-spider-verse'
+    | '/actors/$actorId'
     | '/directory/$characterId'
+    | '/earths/$earthId'
+    | '/movies/$movieId'
     | '/directory/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -138,11 +188,16 @@ export interface FileRouteTypes {
     | '/admin'
     | '/animated-films'
     | '/collection'
+    | '/discover'
     | '/live-action'
+    | '/search'
     | '/timeline'
     | '/web-of-life'
     | '/what-is-the-spider-verse'
+    | '/actors/$actorId'
     | '/directory/$characterId'
+    | '/earths/$earthId'
+    | '/movies/$movieId'
     | '/directory'
   id:
     | '__root__'
@@ -151,11 +206,16 @@ export interface FileRouteTypes {
     | '/admin'
     | '/animated-films'
     | '/collection'
+    | '/discover'
     | '/live-action'
+    | '/search'
     | '/timeline'
     | '/web-of-life'
     | '/what-is-the-spider-verse'
+    | '/actors/$actorId'
     | '/directory/$characterId'
+    | '/earths/$earthId'
+    | '/movies/$movieId'
     | '/directory/'
   fileRoutesById: FileRoutesById
 }
@@ -165,11 +225,16 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AnimatedFilmsRoute: typeof AnimatedFilmsRoute
   CollectionRoute: typeof CollectionRoute
+  DiscoverRoute: typeof DiscoverRoute
   LiveActionRoute: typeof LiveActionRoute
+  SearchRoute: typeof SearchRoute
   TimelineRoute: typeof TimelineRoute
   WebOfLifeRoute: typeof WebOfLifeRoute
   WhatIsTheSpiderVerseRoute: typeof WhatIsTheSpiderVerseRoute
+  ActorsActorIdRoute: typeof ActorsActorIdRoute
   DirectoryCharacterIdRoute: typeof DirectoryCharacterIdRoute
+  EarthsEarthIdRoute: typeof EarthsEarthIdRoute
+  MoviesMovieIdRoute: typeof MoviesMovieIdRoute
   DirectoryIndexRoute: typeof DirectoryIndexRoute
 }
 
@@ -210,11 +275,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CollectionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/discover': {
+      id: '/discover'
+      path: '/discover'
+      fullPath: '/discover'
+      preLoaderRoute: typeof DiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/live-action': {
       id: '/live-action'
       path: '/live-action'
       fullPath: '/live-action'
       preLoaderRoute: typeof LiveActionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/timeline': {
@@ -238,6 +317,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatIsTheSpiderVerseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/actors/$actorId': {
+      id: '/actors/$actorId'
+      path: '/actors/$actorId'
+      fullPath: '/actors/$actorId'
+      preLoaderRoute: typeof ActorsActorIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/directory/': {
       id: '/directory/'
       path: '/directory'
@@ -252,6 +338,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DirectoryCharacterIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/earths/$earthId': {
+      id: '/earths/$earthId'
+      path: '/earths/$earthId'
+      fullPath: '/earths/$earthId'
+      preLoaderRoute: typeof EarthsEarthIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/movies/$movieId': {
+      id: '/movies/$movieId'
+      path: '/movies/$movieId'
+      fullPath: '/movies/$movieId'
+      preLoaderRoute: typeof MoviesMovieIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -261,11 +361,16 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AnimatedFilmsRoute: AnimatedFilmsRoute,
   CollectionRoute: CollectionRoute,
+  DiscoverRoute: DiscoverRoute,
   LiveActionRoute: LiveActionRoute,
+  SearchRoute: SearchRoute,
   TimelineRoute: TimelineRoute,
   WebOfLifeRoute: WebOfLifeRoute,
   WhatIsTheSpiderVerseRoute: WhatIsTheSpiderVerseRoute,
+  ActorsActorIdRoute: ActorsActorIdRoute,
   DirectoryCharacterIdRoute: DirectoryCharacterIdRoute,
+  EarthsEarthIdRoute: EarthsEarthIdRoute,
+  MoviesMovieIdRoute: MoviesMovieIdRoute,
   DirectoryIndexRoute: DirectoryIndexRoute,
 }
 export const routeTree = rootRouteImport

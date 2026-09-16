@@ -10,6 +10,7 @@ import eventsRouter from './routes/events';
 import moviesRouter from './routes/movies';
 import actorsRouter from './routes/actors';
 import attachmentsRouter from './routes/attachments';
+import searchRouter from './routes/search';
 import { authMiddleware } from './middleware/auth';
 import { validateInput } from './middleware/validate';
 
@@ -75,6 +76,7 @@ app.use('/api/events', validateInput('events'), eventsRouter);
 app.use('/api/movies', validateInput('movies'), moviesRouter);
 app.use('/api/actors', validateInput('actors'), actorsRouter);
 app.use('/api/attachments', attachmentsRouter);
+app.use('/api/search', searchRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {

@@ -3,13 +3,12 @@ import { useState } from "react";
 
 const nav = [
   { to: "/", label: "Home" },
-  { to: "/what-is-the-spider-verse", label: "What Is It" },
   { to: "/directory", label: "Directory" },
   { to: "/timeline", label: "Timeline" },
-  { to: "/web-of-life", label: "Web of Life" },
+  { to: "/discover", label: "Discover" },
+  { to: "/what-is-the-spider-verse", label: "Universes" },
   { to: "/animated-films", label: "Animated" },
   { to: "/live-action", label: "Live-Action" },
-  { to: "/adjacent", label: "Adjacent" },
   { to: "/collection", label: "My Comics" },
 ] as const;
 

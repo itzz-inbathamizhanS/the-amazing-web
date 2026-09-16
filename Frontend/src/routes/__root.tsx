@@ -132,6 +132,21 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const [searchOpen, setSearchOpen] = useState(false);
 
+  // Global Ctrl+K / Cmd+K to open command palette
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen((prev) => !prev);
+      }
+      if (e.key === "Escape" && searchOpen) {
+        setSearchOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [searchOpen]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-[100dvh] flex-col bg-void">

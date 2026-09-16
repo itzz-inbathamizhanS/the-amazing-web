@@ -1,18 +1,19 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { BranchLegend, MultiverseStage } from "@/components/MultiverseStage";
-import { type Character, type Earth, type TimelineEvent } from "@/data/spiderverse";
+import { type Character, type Earth, type TimelineEvent, type Movie } from "@/data/spiderverse";
 import { useCollection } from "@/lib/content-store";
+import { useState, useCallback } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Amazing Web — A Cinematic Spider-Verse Multiverse Map" },
+      { title: "The Amazing Web â€” A Cinematic Spider-Verse Multiverse Map" },
       {
         name: "description",
         content:
           "Travel a glowing 3D timeline where the main Marvel continuity splits into alternate Earths. Explore Spider-variants, comics crossovers, animated films and live-action continuities.",
       },
-      { property: "og:title", content: "The Amazing Web — A Cinematic Spider-Verse Map" },
+      { property: "og:title", content: "The Amazing Web â€” A Cinematic Spider-Verse Map" },
       {
         property: "og:description",
         content:
@@ -23,13 +24,35 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+function pickRandom<T>(arr: T[], n: number): T[] {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
+
 function Home() {
+  const navigate = useNavigate();
   const charStore = useCollection<Character>("characters");
   const earthStore = useCollection<Earth>("earths");
   const eventStore = useCollection<TimelineEvent>("timeline-events");
+  const movieStore = useCollection<Movie>("movies");
+
+  const [featured, setFeatured] = useState<Character[]>([]);
+  const [initialized, setInitialized] = useState(false);
+
+  if (charStore.hydrated && !initialized) {
+    setFeatured(pickRandom(charStore.items.filter((c) => c.imageUrl), 6));
+    setInitialized(true);
+  }
+
+  const surpriseMe = useCallback(() => {
+    if (charStore.items.length === 0) return;
+    const random = charStore.items[Math.floor(Math.random() * charStore.items.length)];
+    navigate({ to: "/directory/$characterId", params: { characterId: random.id } });
+  }, [charStore.items, navigate]);
 
   return (
     <>
+      {/* â”€â”€â”€â”€â”€ HERO â”€â”€â”€â”€â”€ */}
       <section className="relative h-[300vh]">
         <div className="sticky top-0 h-[100dvh]">
           <MultiverseStage mode="hero" className="h-full w-full" />
@@ -37,7 +60,7 @@ function Home() {
           <div className="pointer-events-none absolute inset-x-0 top-0 z-20 px-4 pt-16 sm:px-6 sm:pt-24">
             <div className="mx-auto max-w-6xl">
               <p className="animate-glitch-in font-mono text-[0.68rem] uppercase tracking-[0.4em] text-accent">
-                One timeline · many Earths
+                One timeline Â· many Earths
               </p>
               <h1 className="mt-4 max-w-3xl text-6xl leading-[0.88] text-glow sm:text-8xl">
                 THE AMAZING WEB
@@ -63,19 +86,27 @@ function Home() {
                 >
                   Full timeline
                 </Link>
+                <Link
+                  to="/search"
+                  className="rounded-full border border-border bg-background/50 px-5 py-2.5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-foreground/85 transition-colors hover:border-accent"
+                >
+                  Search âŒ˜K
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* â”€â”€â”€â”€â”€ STATS â”€â”€â”€â”€â”€ */}
       <section className="relative border-y border-border/60">
         <div className="pointer-events-none absolute inset-0 scanlines opacity-30" />
-        <div className="mx-auto grid max-w-7xl gap-6 px-4 py-16 sm:grid-cols-3 sm:px-6">
+        <div className="mx-auto grid max-w-7xl gap-6 px-4 py-16 sm:grid-cols-4 sm:px-6">
           {[
             { n: charStore.items.length, label: "Spider-people mapped" },
             { n: earthStore.items.length, label: "Universes tracked" },
             { n: eventStore.items.length, label: "Story branch points" },
+            { n: movieStore.items.length, label: "Films catalogued" },
           ].map((stat) => (
             <div key={stat.label} className="ink-panel rounded-lg p-6">
               <p className="font-display text-6xl leading-none text-primary text-glow">{stat.n}</p>
@@ -87,6 +118,98 @@ function Home() {
         </div>
       </section>
 
+      {/* â”€â”€â”€â”€â”€ EXPLORE THE WEB â”€â”€â”€â”€â”€ */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
+        <p className="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-accent">
+          Explore the Web
+        </p>
+        <h2 className="mt-3 text-5xl leading-none">JUMP IN ANYWHERE</h2>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+          Every corner of the Spider-Verse is connected. Pick a starting point.
+        </p>
+
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {[
+            { to: "/directory" as const, label: "Characters", count: charStore.items.length, icon: "ðŸ•·ï¸" },
+            { to: "/what-is-the-spider-verse" as const, label: "Earths", count: earthStore.items.length, icon: "ðŸŒ" },
+            { to: "/animated-films" as const, label: "Movies", count: movieStore.items.length, icon: "ðŸŽ¬" },
+            { to: "/live-action" as const, label: "Actors", count: 0, icon: "ðŸŽ­" },
+            { to: "/timeline" as const, label: "Timeline", count: eventStore.items.length, icon: "ðŸ“…" },
+          ].map((cat) => (
+            <Link
+              key={cat.label}
+              to={cat.to}
+              className="ink-panel hover-lift flex flex-col items-center rounded-lg p-6 text-center"
+            >
+              <span className="text-3xl" aria-hidden>{cat.icon}</span>
+              <p className="mt-3 text-lg font-medium text-foreground">{cat.label}</p>
+              {cat.count > 0 && (
+                <p className="mt-1 font-mono text-xs text-muted-foreground">{cat.count} entries</p>
+              )}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* â”€â”€â”€â”€â”€ FEATURED CHARACTERS â”€â”€â”€â”€â”€ */}
+      {featured.length > 0 && (
+        <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <p className="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-accent">
+                Featured
+              </p>
+              <h2 className="mt-3 text-5xl leading-none">DISCOVER SOMEONE NEW</h2>
+            </div>
+            <button
+              onClick={surpriseMe}
+              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-primary-foreground shadow-glow transition-transform hover:scale-[1.03]"
+            >
+              ðŸŽ² Surprise Me
+            </button>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((c) => (
+              <Link
+                key={c.id}
+                to="/directory/$characterId"
+                params={{ characterId: c.id }}
+                className="ink-panel hover-lift group rounded-lg overflow-hidden"
+              >
+                {c.imageUrl && (
+                  <div className="h-40 w-full overflow-hidden">
+                    <img
+                      src={c.imageUrl}
+                      alt={c.alias || c.name}
+                      className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <div className="p-4">
+                  <p className="text-lg font-medium text-foreground">{c.alias || c.name}</p>
+                  <p className="font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">
+                    {c.name} Â· {c.earth}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile surprise me */}
+          <div className="mt-6 text-center sm:hidden">
+            <button
+              onClick={surpriseMe}
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-mono text-sm uppercase tracking-[0.2em] text-primary-foreground shadow-glow"
+            >
+              ðŸŽ² Surprise Me
+            </button>
+          </div>
+        </section>
+      )}
+
+      {/* â”€â”€â”€â”€â”€ BRANCH LEGEND â”€â”€â”€â”€â”€ */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <p className="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-accent">
           Read the colours
@@ -101,6 +224,7 @@ function Home() {
         </div>
       </section>
 
+      {/* â”€â”€â”€â”€â”€ CONTENT CARDS â”€â”€â”€â”€â”€ */}
       <section className="mx-auto max-w-7xl px-4 pb-4 sm:px-6">
         <div className="grid gap-4 md:grid-cols-3">
           {[
@@ -128,10 +252,36 @@ function Home() {
               <h3 className="text-2xl leading-none">{card.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{card.body}</p>
               <p className="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-accent">
-                Enter →
+                Enter â†’
               </p>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* â”€â”€â”€â”€â”€ DISCOVER + SEARCH CTA â”€â”€â”€â”€â”€ */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Link
+            to="/discover"
+            className="ink-panel hover-lift rounded-lg p-8 text-center"
+          >
+            <span className="text-4xl" aria-hidden>ðŸ”®</span>
+            <h3 className="mt-4 text-2xl">DISCOVER MODE</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Explore random characters, Earths, and movies. Every visit is different.
+            </p>
+          </Link>
+          <Link
+            to="/search"
+            className="ink-panel hover-lift rounded-lg p-8 text-center"
+          >
+            <span className="text-4xl" aria-hidden>ðŸ”</span>
+            <h3 className="mt-4 text-2xl">SEARCH THE MULTIVERSE</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Find any character, Earth, movie, actor, or event across every universe.
+            </p>
+          </Link>
         </div>
       </section>
     </>
