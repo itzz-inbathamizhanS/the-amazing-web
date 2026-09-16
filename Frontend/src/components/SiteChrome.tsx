@@ -10,6 +10,7 @@ const nav = [
   { to: "/what-is-the-spider-verse", label: "Universes" },
   { to: "/animated-films", label: "Animated" },
   { to: "/live-action", label: "Live-Action" },
+  { to: "/help", label: "Help" },
 ] as const;
 
 export function SiteHeader() {

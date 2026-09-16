@@ -210,7 +210,7 @@ function Home() {
         </section>
       )}
 
-      {/* â”€â”€â”€â”€â”€ BRANCH LEGEND â”€â”€â”€â”€â”€ */}
+      {/* ───── BRANCH LEGEND ───── */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <p className="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-accent">
           Read the colours
@@ -225,7 +225,7 @@ function Home() {
         </div>
       </section>
 
-      {/* â”€â”€â”€â”€â”€ CONTENT CARDS â”€â”€â”€â”€â”€ */}
+      {/* ───── CONTENT CARDS ───── */}
       <section className="mx-auto max-w-7xl px-4 pb-4 sm:px-6">
         <div className="grid gap-4 md:grid-cols-3">
           {[
@@ -253,21 +253,21 @@ function Home() {
               <h3 className="text-2xl leading-none">{card.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{card.body}</p>
               <p className="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-accent">
-                Enter â†’
+                Enter →
               </p>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* â”€â”€â”€â”€â”€ DISCOVER + SEARCH CTA â”€â”€â”€â”€â”€ */}
+      {/* ───── DISCOVER + SEARCH CTA ───── */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <div className="grid gap-4 sm:grid-cols-2">
           <Link
             to="/discover"
             className="ink-panel hover-lift rounded-lg p-8 text-center"
           >
-            <span className="text-4xl" aria-hidden>ðŸ”®</span>
+            <Compass className="mx-auto h-10 w-10 text-accent" />
             <h3 className="mt-4 text-2xl">DISCOVER MODE</h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Explore random characters, Earths, and movies. Every visit is different.
@@ -277,7 +277,7 @@ function Home() {
             to="/search"
             className="ink-panel hover-lift rounded-lg p-8 text-center"
           >
-            <span className="text-4xl" aria-hidden>ðŸ”</span>
+            <Search className="mx-auto h-10 w-10 text-accent" />
             <h3 className="mt-4 text-2xl">SEARCH THE MULTIVERSE</h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Find any character, Earth, movie, actor, or event across every universe.
