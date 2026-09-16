@@ -49,8 +49,10 @@ export function CommandPalette({
       (e.description && e.description.toLowerCase().includes(query))
   );
 
+  const hasHelpMatch = "help".includes(query) || "guide".includes(query) || "user".includes(query);
+
   const hasResults =
-    charResults.length > 0 || movieResults.length > 0 || eventResults.length > 0 || earthResults.length > 0;
+    charResults.length > 0 || movieResults.length > 0 || eventResults.length > 0 || earthResults.length > 0 || hasHelpMatch;
 
   const close = () => setOpen(false);
 
@@ -203,6 +205,28 @@ export function CommandPalette({
                       </div>
                     </Link>
                   ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {search && ("help".includes(query) || "guide".includes(query) || "user".includes(query)) && (
+            <div className="space-y-4 py-2">
+              <div>
+                <h3 className="px-3 pb-2 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-accent">
+                  Pages
+                </h3>
+                <div className="space-y-1">
+                  <Link
+                    to="/help"
+                    onClick={close}
+                    className="flex items-center justify-between rounded-md px-3 py-2 text-sm hover:bg-accent/15"
+                  >
+                    <span className="font-medium text-foreground">Help / User Guide</span>
+                    <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted-foreground">
+                      Guide
+                    </span>
+                  </Link>
                 </div>
               </div>
             </div>

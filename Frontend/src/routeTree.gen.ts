@@ -15,6 +15,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AnimatedFilmsRouteImport } from './routes/animated-films'
 import { Route as CollectionRouteImport } from './routes/collection'
 import { Route as DiscoverRouteImport } from './routes/discover'
+import { Route as HelpRouteImport } from './routes/help'
 import { Route as LiveActionRouteImport } from './routes/live-action'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as TimelineRouteImport } from './routes/timeline'
@@ -54,6 +55,11 @@ const CollectionRoute = CollectionRouteImport.update({
 const DiscoverRoute = DiscoverRouteImport.update({
   id: '/discover',
   path: '/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LiveActionRoute = LiveActionRouteImport.update({
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/animated-films': typeof AnimatedFilmsRoute
   '/collection': typeof CollectionRoute
   '/discover': typeof DiscoverRoute
+  '/help': typeof HelpRoute
   '/live-action': typeof LiveActionRoute
   '/search': typeof SearchRoute
   '/timeline': typeof TimelineRoute
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/animated-films': typeof AnimatedFilmsRoute
   '/collection': typeof CollectionRoute
   '/discover': typeof DiscoverRoute
+  '/help': typeof HelpRoute
   '/live-action': typeof LiveActionRoute
   '/search': typeof SearchRoute
   '/timeline': typeof TimelineRoute
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/animated-films': typeof AnimatedFilmsRoute
   '/collection': typeof CollectionRoute
   '/discover': typeof DiscoverRoute
+  '/help': typeof HelpRoute
   '/live-action': typeof LiveActionRoute
   '/search': typeof SearchRoute
   '/timeline': typeof TimelineRoute
@@ -171,6 +180,7 @@ export interface FileRouteTypes {
     | '/animated-films'
     | '/collection'
     | '/discover'
+    | '/help'
     | '/live-action'
     | '/search'
     | '/timeline'
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/animated-films'
     | '/collection'
     | '/discover'
+    | '/help'
     | '/live-action'
     | '/search'
     | '/timeline'
@@ -207,6 +218,7 @@ export interface FileRouteTypes {
     | '/animated-films'
     | '/collection'
     | '/discover'
+    | '/help'
     | '/live-action'
     | '/search'
     | '/timeline'
@@ -226,6 +238,7 @@ export interface RootRouteChildren {
   AnimatedFilmsRoute: typeof AnimatedFilmsRoute
   CollectionRoute: typeof CollectionRoute
   DiscoverRoute: typeof DiscoverRoute
+  HelpRoute: typeof HelpRoute
   LiveActionRoute: typeof LiveActionRoute
   SearchRoute: typeof SearchRoute
   TimelineRoute: typeof TimelineRoute
@@ -280,6 +293,13 @@ declare module '@tanstack/react-router' {
       path: '/discover'
       fullPath: '/discover'
       preLoaderRoute: typeof DiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/live-action': {
@@ -362,6 +382,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnimatedFilmsRoute: AnimatedFilmsRoute,
   CollectionRoute: CollectionRoute,
   DiscoverRoute: DiscoverRoute,
+  HelpRoute: HelpRoute,
   LiveActionRoute: LiveActionRoute,
   SearchRoute: SearchRoute,
   TimelineRoute: TimelineRoute,

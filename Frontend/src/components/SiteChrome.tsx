@@ -76,8 +76,18 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="mt-24 border-t border-border/70 py-10">
-      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 sm:px-6">
-        <p className="font-display text-xl tracking-widest">THE AMAZING WEB</p>
+      <div className="mx-auto max-w-7xl space-y-4 px-4 sm:px-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <p className="font-display text-xl tracking-widest">THE AMAZING WEB</p>
+          <div className="flex flex-wrap gap-4 font-mono text-[0.65rem] uppercase tracking-[0.2em]">
+            <Link to="/help" className="text-muted-foreground hover:text-foreground transition-colors">
+              Help / User Guide
+            </Link>
+            <Link to="/admin" className="text-muted-foreground hover:text-foreground transition-colors">
+              Admin
+            </Link>
+          </div>
+        </div>
         <p className="max-w-2xl text-sm text-muted-foreground">
           An independent, non-commercial fan reference about the Spider-Verse multiverse concept.
           All summaries are written from scratch; characters are represented as abstract glowing
