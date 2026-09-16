@@ -126,7 +126,7 @@ export function CommandPalette({
                       >
                         <span className="font-medium text-foreground">{c.alias || c.name}</span>
                         <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted-foreground">
-                          {c.earth || c.earthId}
+                          {c.earth}
                         </span>
                       </Link>
                     ))}

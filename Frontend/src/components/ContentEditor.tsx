@@ -75,7 +75,7 @@ export function RecordDialog({
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+      const API_URL = import.meta.env['VITE_API_URL'] || "http://localhost:3001/api";
       const res = await fetch(`${API_URL}/upload`, {
         method: "POST",
         headers: {
