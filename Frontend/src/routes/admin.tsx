@@ -35,6 +35,7 @@ function AdminPage() {
       setError(true);
       return;
     }
+    localStorage.setItem("spider-admin-key", password);
     setPassword("");
     await router.invalidate();
   };
@@ -42,6 +43,7 @@ function AdminPage() {
   const signOut = async () => {
     setBusy(true);
     await lock();
+    localStorage.removeItem("spider-admin-key");
     setBusy(false);
     await router.invalidate();
   };

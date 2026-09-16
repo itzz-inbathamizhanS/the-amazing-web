@@ -6,7 +6,7 @@ type AdminSession = { unlocked?: boolean };
 
 function sessionConfig() {
   return {
-    password: process.env["SESSION_SECRET"]!,
+    password: process.env["API_SECRET_KEY"] || "default-secret-key-123",
     name: "amazing-web-admin",
     maxAge: 60 * 60 * 24 * 7,
     cookie: { httpOnly: true, secure: true, sameSite: "lax" as const, path: "/" },
@@ -27,7 +27,7 @@ export const getAdminState = createServerFn({ method: "GET" }).handler(async () 
 export const unlockAdmin = createServerFn({ method: "POST" })
   .inputValidator((data: { password: string }) => ({ password: String(data?.password ?? "") }))
   .handler(async ({ data }) => {
-    const expected = process.env["ADMIN_PASSWORD"];
+    const expected = process.env["API_SECRET_KEY"];
     if (!expected) return { ok: false as const };
     if (!matches(data.password, expected)) return { ok: false as const };
 
