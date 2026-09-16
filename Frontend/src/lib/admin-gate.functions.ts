@@ -6,7 +6,7 @@ type AdminSession = { unlocked?: boolean };
 
 function sessionConfig() {
   return {
-    password: process.env["API_SECRET_KEY"] || "default-secret-key-123",
+    password: process.env["SESSION_SECRET"] || "super_secret_session_key_for_spider_verse_website_12345_very_long",
     name: "amazing-web-admin",
     maxAge: 60 * 60 * 24 * 7,
     cookie: { httpOnly: true, secure: true, sameSite: "lax" as const, path: "/" },
