@@ -9,7 +9,7 @@
     "postinstall": "npx prisma generate"
   },
   "keywords": [],
-  "author": "",
+  "author": "thamizhans <tamil9787352192@gmail.com>",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
