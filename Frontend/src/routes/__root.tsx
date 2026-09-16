@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { getAdminState } from "@/lib/admin-gate.functions";
 import { CommandPalette } from "@/components/CommandPalette";
+import { ClickRipple } from "@/components/ClickRipple";
 
 function NotFoundComponent() {
   return (
@@ -157,6 +158,7 @@ function RootComponent() {
         </main>
         <SiteFooter />
         <CommandPalette open={searchOpen} setOpen={setSearchOpen} />
+        <ClickRipple />
       </div>
     </QueryClientProvider>
   );

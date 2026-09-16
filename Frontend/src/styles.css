@@ -115,11 +115,16 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    cursor: url('/cursor.svg') 16 16, auto;
+    cursor: url('/cursor-red.svg') 16 16, auto;
   }
 
-  a, button, [role="button"] {
-    cursor: url('/cursor.svg') 16 16, pointer;
+  a, button, [role="button"], input, select, textarea {
+    cursor: url('/cursor-white.svg') 16 16, pointer;
+  }
+
+  @keyframes ripple-effect {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(3); opacity: 0; }
   }
 
   h1,
