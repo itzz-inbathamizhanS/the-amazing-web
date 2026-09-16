@@ -695,7 +695,7 @@ function HelpPage() {
                 },
                 {
                   q: "Who built this?",
-                  a: "The Amazing Web is an independent, non-commercial fan reference project. It is not affiliated with or endorsed by any publisher or studio.",
+                  a: "The Amazing Web is created and maintained by Inbathamizhan S.",
                 },
               ].map((faq) => (
                 <details key={faq.q} className="ink-panel rounded-lg group">

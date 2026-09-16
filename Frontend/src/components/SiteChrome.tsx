@@ -20,10 +20,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/70 bg-void/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <Link to="/" className="group flex items-center gap-3">
-          <span
-            aria-hidden
-            className="size-3 rounded-full bg-primary shadow-glow transition-transform group-hover:scale-125"
-          />
+          <img src="/logo.png" alt="Logo" className="h-5 w-auto transition-transform group-hover:scale-110" />
           <span className="font-display text-xl leading-none tracking-widest">
             THE AMAZING WEB
           </span>
@@ -90,13 +87,14 @@ export function SiteFooter() {
           </div>
         </div>
         <p className="max-w-2xl text-sm text-muted-foreground">
-          An independent, non-commercial fan reference about the Spider-Verse multiverse concept.
-          All summaries are written from scratch; characters are represented as abstract glowing
-          nodes rather than likenesses. Not affiliated with or endorsed by any publisher or studio.
+          The Amazing Web is an interactive Spider-Verse knowledge platform.
+          Created and maintained by Inbathamizhan S.
         </p>
-        <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
-          Powered by Supabase · built with love for the multiverse
-        </p>
+        <div className="flex gap-4 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
+          <a href="https://github.com/itzz-inbathamizhanS" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
+          <span>·</span>
+          <a href="https://www.linkedin.com/in/inbathamizhans" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
+        </div>
       </div>
     </footer>
   );
