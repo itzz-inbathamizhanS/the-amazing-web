@@ -5,11 +5,11 @@ const nav = [
   { to: "/", label: "Home" },
   { to: "/directory", label: "Directory" },
   { to: "/timeline", label: "Timeline" },
+  { to: "/web-of-life", label: "Web of Life" },
   { to: "/discover", label: "Discover" },
   { to: "/what-is-the-spider-verse", label: "Universes" },
   { to: "/animated-films", label: "Animated" },
   { to: "/live-action", label: "Live-Action" },
-  { to: "/collection", label: "My Comics" },
 ] as const;
 
 export function SiteHeader() {
