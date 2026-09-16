@@ -25,9 +25,35 @@ function AudioToggle() {
     audio.volume = 0.5;
     audioRef.current = audio;
 
+    let interacted = false;
+
+    const handleInteraction = () => {
+      if (interacted) return;
+      interacted = true;
+      audio.play().then(() => setIsPlaying(true)).catch(() => {});
+      document.removeEventListener("click", handleInteraction);
+      document.removeEventListener("keydown", handleInteraction);
+    };
+
+    const tryPlay = async () => {
+      try {
+        await audio.play();
+        setIsPlaying(true);
+        interacted = true;
+      } catch (err) {
+        // Autoplay blocked by browser policy, wait for first interaction
+        document.addEventListener("click", handleInteraction);
+        document.addEventListener("keydown", handleInteraction);
+      }
+    };
+
+    tryPlay();
+
     return () => {
       audio.pause();
       audio.src = "";
+      document.removeEventListener("click", handleInteraction);
+      document.removeEventListener("keydown", handleInteraction);
     };
   }, []);
 
