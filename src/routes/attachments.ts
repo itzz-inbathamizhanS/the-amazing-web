@@ -1,55 +1,39 @@
 import { Router } from 'express';
 import prisma from '../lib/prisma';
-import multer from 'multer';
-import path from 'path';
 
 const router = Router();
 
-// Use the same uploads config as index.ts
-const uploadsDir = path.join(__dirname, '../../uploads');
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadsDir);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
-});
-const upload = multer({ storage });
+const ALLOWED_FIELDS = ['title', 'ownedFormat', 'personalNotes', 'linkedCharacterId', 'linkedEventId', 'filePath'] as const;
 
-router.get('/', async (req, res) => {
+function pickFields(body: Record<string, unknown>): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+  for (const key of ALLOWED_FIELDS) {
+    if (body[key] !== undefined) result[key] = body[key];
+  }
+  return result;
+}
+
+router.get('/', async (_req, res) => {
   try {
     const attachments = await prisma.comicAttachment.findMany({
       include: { character: true, event: true }
     });
     res.json(attachments);
   } catch (error) {
+    console.error('Failed to fetch attachments:', error);
     res.status(500).json({ error: 'Failed to fetch attachments' });
   }
 });
 
-router.post('/', upload.single('file'), async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    const { title, ownedFormat, personalNotes, linkedCharacterId, linkedEventId } = req.body;
-    let filePath = null;
-    
-    if (req.file) {
-      filePath = '/uploads/' + req.file.filename;
-    }
-
+    const data = pickFields(req.body);
     const attachment = await prisma.comicAttachment.create({
-      data: {
-        title,
-        ownedFormat,
-        personalNotes,
-        linkedCharacterId,
-        linkedEventId,
-        filePath
-      }
+      data: data as any
     });
     res.status(201).json(attachment);
   } catch (error) {
+    console.error('Failed to create attachment:', error);
     res.status(500).json({ error: 'Failed to create attachment' });
   }
 });
@@ -59,6 +43,7 @@ router.delete('/:id', async (req, res) => {
     await prisma.comicAttachment.delete({ where: { id: req.params.id } });
     res.json({ message: 'Attachment deleted successfully' });
   } catch (error) {
+    console.error('Failed to delete attachment:', error);
     res.status(500).json({ error: 'Failed to delete attachment' });
   }
 });

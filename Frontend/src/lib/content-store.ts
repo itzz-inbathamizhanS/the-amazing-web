@@ -100,6 +100,26 @@ function getEndpoint(key: string): string | null {
   return key; // characters, earths, movies, actors, attachments
 }
 
+/** Build headers for mutation requests, including the admin API key if available. */
+function mutationHeaders(): Record<string, string> {
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (typeof window !== "undefined") {
+    const key = localStorage.getItem("spider-admin-key");
+    if (key) headers["x-api-key"] = key;
+  }
+  return headers;
+}
+
+/** Build headers for delete requests (no Content-Type needed). */
+function deleteHeaders(): Record<string, string> {
+  const headers: Record<string, string> = {};
+  if (typeof window !== "undefined") {
+    const key = localStorage.getItem("spider-admin-key");
+    if (key) headers["x-api-key"] = key;
+  }
+  return headers;
+}
+
 export type Collection<T> = {
   items: T[];
   hydrated: boolean;
@@ -163,7 +183,7 @@ export function useCollection<T extends { id: string }>(
       }
       const res = await fetch(endpoint!, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: mutationHeaders(),
         body: JSON.stringify(mapToApi(key, value)),
       });
       if (!res.ok) throw new Error("Failed to create");
@@ -182,7 +202,7 @@ export function useCollection<T extends { id: string }>(
       }
       const res = await fetch(`${endpoint!}/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: mutationHeaders(),
         body: JSON.stringify(mapToApi(key, value)),
       });
       if (!res.ok) throw new Error("Failed to update");
@@ -198,7 +218,7 @@ export function useCollection<T extends { id: string }>(
         setLocalData(current.filter((item) => item.id !== id));
         return;
       }
-      const res = await fetch(`${endpoint!}/${id}`, { method: "DELETE" });
+      const res = await fetch(`${endpoint!}/${id}`, { method: "DELETE", headers: deleteHeaders() });
       if (!res.ok) throw new Error("Failed to delete");
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [key] }),

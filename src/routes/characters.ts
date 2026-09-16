@@ -3,8 +3,19 @@ import prisma from '../lib/prisma';
 
 const router = Router();
 
+// Allowed fields for Character create/update — prevents arbitrary field injection
+const ALLOWED_FIELDS = ['id', 'name', 'alias', 'earthId', 'realName', 'firstAppearance', 'description', 'powers', 'imageUrl', 'tags', 'media'] as const;
+
+function pickFields(body: Record<string, unknown>): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+  for (const key of ALLOWED_FIELDS) {
+    if (body[key] !== undefined) result[key] = body[key];
+  }
+  return result;
+}
+
 // Get all characters
-router.get('/', async (req, res) => {
+router.get('/', async (_req, res) => {
   try {
     const characters = await prisma.character.findMany({
       include: {
@@ -16,6 +27,7 @@ router.get('/', async (req, res) => {
     });
     res.json(characters);
   } catch (error) {
+    console.error('Failed to fetch characters:', error);
     res.status(500).json({ error: 'Failed to fetch characters' });
   }
 });
@@ -38,6 +50,7 @@ router.get('/:id', async (req, res) => {
     }
     res.json(character);
   } catch (error) {
+    console.error('Failed to fetch character:', error);
     res.status(500).json({ error: 'Failed to fetch character' });
   }
 });
@@ -45,12 +58,11 @@ router.get('/:id', async (req, res) => {
 // Create a character
 router.post('/', async (req, res) => {
   try {
-    const data = req.body;
-    const character = await prisma.character.create({
-      data,
-    });
+    const data = pickFields(req.body);
+    const character = await prisma.character.create({ data: data as any });
     res.status(201).json(character);
   } catch (error) {
+    console.error('Failed to create character:', error);
     res.status(500).json({ error: 'Failed to create character' });
   }
 });
@@ -58,13 +70,15 @@ router.post('/', async (req, res) => {
 // Update a character
 router.put('/:id', async (req, res) => {
   try {
-    const data = req.body;
+    const data = pickFields(req.body);
+    delete (data as any).id; // never allow ID mutation
     const character = await prisma.character.update({
       where: { id: req.params.id },
-      data,
+      data: data as any,
     });
     res.json(character);
   } catch (error) {
+    console.error('Failed to update character:', error);
     res.status(500).json({ error: 'Failed to update character' });
   }
 });
@@ -77,8 +91,10 @@ router.delete('/:id', async (req, res) => {
     });
     res.json({ message: 'Character deleted successfully' });
   } catch (error) {
+    console.error('Failed to delete character:', error);
     res.status(500).json({ error: 'Failed to delete character' });
   }
 });
 
 export default router;
+
