@@ -14,6 +14,9 @@ The Amazing Web is an interactive, cinematic 3D timeline and directory mapping t
 - **Backend:** Node.js, Express, Prisma ORM
 - **Database:** PostgreSQL (Supabase) + Supabase Storage for character imagery
 
+## Documentation
+Comprehensive technical documentation covering system architecture, data flows, security models, and API references can be found in the [`docs/`](file:///d:/Spider/docs/) directory.
+
 ## Running Locally
 
 1. **Clone the repository:**
