@@ -55,4 +55,4 @@ Comprehensive technical documentation covering system architecture, data flows, 
    ```
 
 ## Disclaimer
-"Spider-Man" and all related characters and elements are trademarks of and © Marvel Characters, Inc. and Sony Pictures Entertainment. This is a non-commercial, educational fan project and is not affiliated with Marvel or Sony. Official imagery is sourced under fair use / wiki APIs.
+"Spider-Man" and all related characters and elements are trademarks of and © Marvel Characters, Inc. and Sony Pictures Entertainment. "The Amazing Spider-Man 2 Theme" (by Hans Zimmer) is property of its respective copyright holders (Sony Classical / Sony Music Entertainment). This is a non-commercial, educational fan project and is not affiliated with, endorsed by, or sponsored by Marvel, Sony, or the artists. Official imagery is sourced under fair use / wiki APIs.
