@@ -1,17 +1,21 @@
 # Data Flow
 
+## Image Upload Sequence
+When an administrator uploads a new image for a character or event, the following flow occurs entirely in memory to optimize speed and security:
+
 ```mermaid
 sequenceDiagram
-    participant Admin
-    participant Frontend
-    participant Backend
-    participant Supabase
+    participant Admin as Admin Client
+    participant Backend as Express API
+    participant Storage as Supabase Storage
     
-    Admin->>Frontend: Upload image via ContentEditor
-    Frontend->>Backend: POST /api/upload + x-api-key
-    Backend->>Backend: Authenticate API Key
-    Backend->>Supabase: Upload buffer to 'images'
-    Supabase-->>Backend: Return public URL
-    Backend-->>Frontend: { url: "https://..." }
-    Frontend-->>Admin: Display preview
+    Admin->>Backend: POST /api/upload (multipart/form-data)
+    Note over Admin,Backend: Includes x-api-key header
+    Backend->>Backend: Verify API Key
+    Backend->>Backend: Multer parses file to memory buffer
+    Backend->>Storage: upload(buffer, { contentType })
+    Storage-->>Backend: Upload Success
+    Backend->>Storage: getPublicUrl()
+    Storage-->>Backend: Public URL String
+    Backend-->>Admin: 200 OK { url: "https://..." }
 ```
