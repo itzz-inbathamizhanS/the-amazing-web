@@ -1,9 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState, Suspense, useRef } from "react";
-import { Canvas, useLoader, useFrame } from "@react-three/fiber";
-import { Center, Bounds } from "@react-three/drei";
-import { STLLoader } from "three-stdlib";
-import * as THREE from "three";
+import { useState } from "react";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -17,41 +13,6 @@ const nav = [
   { to: "/help", label: "Help" },
 ] as const;
 
-function STLModel() {
-  const geom = useLoader(STLLoader, '/tasm2-spider.stl');
-  const ref = useRef<THREE.Mesh>(null);
-  
-  useFrame((state, delta) => {
-    if (ref.current) {
-      ref.current.rotation.z -= delta * 0.5; // spin along Z since STLs are often Z-up
-    }
-  });
-
-  return (
-    <mesh ref={ref} geometry={geom} rotation={[-Math.PI / 2, 0, 0]}>
-      <meshStandardMaterial color="#ff3b5c" metalness={0.7} roughness={0.2} />
-    </mesh>
-  );
-}
-
-function Logo3D() {
-  return (
-    <div className="h-8 w-8 cursor-pointer">
-      <Canvas camera={{ position: [0, 0, 50], fov: 40 }}>
-        <ambientLight intensity={1.5} />
-        <directionalLight position={[10, 20, 10]} intensity={2.5} />
-        <Suspense fallback={null}>
-          <Bounds fit clip observe margin={1}>
-            <Center>
-              <STLModel />
-            </Center>
-          </Bounds>
-        </Suspense>
-      </Canvas>
-    </div>
-  );
-}
-
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
@@ -59,7 +20,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/70 bg-void/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <Link to="/" className="group flex items-center gap-3">
-          <Logo3D />
+          <img src="/logo.png" alt="Logo" className="h-5 w-auto transition-transform group-hover:scale-110" />
           <span className="font-display text-xl leading-none tracking-widest">
             THE AMAZING WEB
           </span>
