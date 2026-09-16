@@ -138,6 +138,10 @@ export function SiteFooter() {
         </div>
         <p className="max-w-2xl text-sm text-muted-foreground">
           The Amazing Web is an interactive Spider-Verse knowledge platform.<br />
+          <span className="mt-2 block font-mono text-[0.7rem] uppercase tracking-widest text-primary/90">
+            Dedicated to Andrew Garfield — The one who made us believe in the Amazing.<br />Loved across every universe, now and always.
+          </span>
+          <br />
           &copy; {new Date().getFullYear()} Inbathamizhan S. All rights reserved.
         </p>
         <div className="flex gap-4 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
