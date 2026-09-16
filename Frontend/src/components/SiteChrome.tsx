@@ -88,7 +88,6 @@ export function SiteFooter() {
         </div>
         <p className="max-w-2xl text-sm text-muted-foreground">
           The Amazing Web is an interactive Spider-Verse knowledge platform.<br />
-          Created and maintained by Inbathamizhan S. <br />
           &copy; {new Date().getFullYear()} Inbathamizhan S. All rights reserved.
         </p>
         <div className="flex gap-4 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
